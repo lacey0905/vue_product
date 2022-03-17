@@ -13,26 +13,11 @@
 		<a v-for="(a,i) in menus" :key="i"> {{ a }} {{i}}</a>
 	</div>
 
-	<div>
-		<img src="./assets/room0.jpg" class="room-img">
-		<h4 v-on:click="modalState = true">{{products[0]}}</h4>
-		<p>50만원</p>
-		<button v-on:click="addCount(0)">허위매물신고</button>
-		<span>신고수 : {{ reportCount[0] }}</span>
-	</div>
-	<div>
-		<img src="./assets/room1.jpg" class="room-img">
-		<h4>{{products[1]}}</h4>
-		<p>50만원</p>
-		<button v-on:click="addCount(1)">허위매물신고</button>
-		<span>신고수 : {{ reportCount[1] }}</span>
-	</div>
-	<div>
-		<img src="./assets/room2.jpg" class="room-img">
-		<h4>{{products[2]}}</h4>
-		<p>50만원</p>
-		<button v-on:click="addCount(2)">허위매물신고</button>
-		<span>신고수 : {{ reportCount[2] }}</span>
+	<div v-for="(item, i) in rooms" :key="i">
+		<img :src="item.image" class="room-img">
+		<h4>{{ item.title }}</h4>
+		<p>{{ item.content }}</p>
+		<p>{{ item.price }}</p>
 	</div>
 
 </div>
@@ -40,23 +25,23 @@
 
 <script>
 
+import data from './assets/data.js'
+
 export default {
 	name: 'App',
 	data(){
 		return {
+			rooms : data,
 			modalState : false,
-			reportCount : [0, 0, 0],
 			menus : ['Home', 'Shop', 'About'],
-			products : ['역삼동 원룸', '천호동 원룸', '마포구 원룸'],
+			products : "a",
 		}
 	},
 	components: {
 
 	},
 	methods: {
-		addCount(idx) {
-			this.reportCount[idx]++;
-		}
+	
 	}
 }
 </script>
