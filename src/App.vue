@@ -1,36 +1,32 @@
 <template>
 <div>
 
-	<div class="black-bg" v-if="modalState">
-		<div class="white-bg">
-			<h4>{{ rooms[0].title }}</h4>
-			<p>상세페이지내용임</p>
-			<button v-on:click="modalState = false">닫기</button>
-		</div>
-	</div>
+	
+	<RoomModal v-bind:rooms="rooms" v-bind:currentRooms="currentRooms" v-bind:modalState="modalState" />
+	<Discount />
 
 	<div class="menu">
 		<a v-for="(a,i) in menus" :key="i"> {{ a }} {{i}}</a>
 	</div>
 
-	<div v-for="(item, i) in rooms" :key="i">
-		<img :src="item.image" class="room-img">
-		<h4>{{ item.title }}</h4>
-		<p>{{ item.content }}</p>
-		<p>{{ item.price }}</p>
-	</div>
+	<Card v-bind:rooms="rooms" />
 
 </div>
 </template>
 
 <script>
 
+import RoomModal from './components/roomModal.vue';
+import Discount from './components/discount.vue';
+import Card from './components/Card.vue';
 import data from './assets/data.js'
 
 export default {
 	name: 'App',
 	data(){
 		return {
+			object : { name : 'kim', age : 20 },
+			currentRooms : 0,
 			rooms : data,
 			modalState : false,
 			menus : ['Home', 'Shop', 'About'],
@@ -38,7 +34,9 @@ export default {
 		}
 	},
 	components: {
-
+		Discount,
+		RoomModal,
+		Card,
 	},
 	methods: {
 	
@@ -84,4 +82,5 @@ div {
   border-radius: 8px;
   padding: 20px;
 } 
+
 </style>
