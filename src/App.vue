@@ -3,7 +3,7 @@
 
 	<div class="black-bg" v-if="modalState">
 		<div class="white-bg">
-			<h4>상세페이지</h4>
+			<h4>{{ rooms[0].title }}</h4>
 			<p>상세페이지내용임</p>
 			<button v-on:click="modalState = false">닫기</button>
 		</div>
