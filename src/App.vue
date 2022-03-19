@@ -1,16 +1,13 @@
 <template>
 <div>
-
-	
-	<RoomModal v-bind:rooms="rooms" v-bind:currentRooms="currentRooms" v-bind:modalState="modalState" />
+	<transition name="fade">
+		<RoomModal @close="modalState = false" v-bind:rooms="rooms" v-bind:currentRooms="currentRooms" v-bind:modalState="modalState" />
+	</transition>
 	<Discount />
-
 	<div class="menu">
 		<a v-for="(a,i) in menus" :key="i"> {{ a }} {{i}}</a>
 	</div>
-
-	<Card v-bind:rooms="rooms" />
-
+	<Card v-bind:rooms="rooms" @openModal="modalState = true; currentRooms=$event" />
 </div>
 </template>
 
@@ -39,12 +36,36 @@ export default {
 		Card,
 	},
 	methods: {
-	
+		
 	}
 }
 </script>
 
 <style>
+.fade-enter-from {
+	transform: translateY(-100px);
+	opacity: 0;
+}
+.fade-enter-active {
+	transition: all 0.2s;
+}
+.fade-enter-to {
+	opacity: 1;
+	transform: translateY(0px);
+}
+
+.fade-leave-from {
+	opacity: 1;
+	transform: translateY(0px);
+}
+.fade-leave-active {
+	transition: all 0.2s;
+}
+.fade-leave-to {
+	opacity: 0;
+	transform: translateY(-100px);
+}
+
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
