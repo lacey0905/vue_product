@@ -3,10 +3,16 @@
 	<transition name="fade">
 		<RoomModal @close="modalState = false" v-bind:rooms="rooms" v-bind:currentRooms="currentRooms" v-bind:modalState="modalState" />
 	</transition>
-	<Discount />
+	<Discount v-if="showDiscount" v-bind:discount="discount" />
 	<div class="menu">
 		<a v-for="(a,i) in menus" :key="i"> {{ a }} {{i}}</a>
 	</div>
+
+	<button @click="priceSort">낮은가격순정렬</button>
+	<button @click="priceSortDown">높은가격순정렬</button>
+	<button @click="nameSortDown">이름순정렬</button>
+	<button @click="sortBack">되돌리기</button>
+
 	<Card v-bind:rooms="rooms" @openModal="modalState = true; currentRooms=$event" />
 </div>
 </template>
@@ -22,6 +28,9 @@ export default {
 	name: 'App',
 	data(){
 		return {
+			discount : 30,
+			showDiscount : true,
+			roomsOrigin : [...data],
 			object : { name : 'kim', age : 20 },
 			currentRooms : 0,
 			rooms : data,
@@ -30,13 +39,41 @@ export default {
 			products : "a",
 		}
 	},
+	mounted() {
+		let timer = setInterval(() => {
+			this.discount--;
+			if(this.discount <= 0) {
+				clearInterval(timer);
+				this.showDiscount = false;
+			}
+			
+		}, 1000);
+	},
+	
 	components: {
 		Discount,
 		RoomModal,
 		Card,
 	},
 	methods: {
-		
+		sortBack() {
+			this.rooms = [...this.roomsOrigin];
+		},
+		priceSort() {
+			this.rooms.sort((a,b) => {
+				return a.price - b.price;
+			});
+		},
+		priceSortDown() {
+			this.rooms.sort((a,b) => {
+				return b.price - a.price;
+			});
+		},
+		nameSortDown() {
+			this.rooms.sort((a,b) => {
+				return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+			});
+		},
 	}
 }
 </script>

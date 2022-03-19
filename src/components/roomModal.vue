@@ -30,6 +30,12 @@ export default {
 			}
 		},
 	},
+	beforeUpdate() {
+		if(this.month == 2) {
+			alert('2개월은 안됨');
+			this.month = 3;
+		}
+	},
     props : {
         rooms : Array,
         currentRooms : Number,
